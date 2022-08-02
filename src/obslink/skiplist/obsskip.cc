@@ -476,7 +476,7 @@ bool transskip_insert(obs_skip *l, setkey_t k, Desc_o* desc, uint8_t opid, node_
     {
         new_node    = alloc_node(ptst);
         new_node->k = k;
-        new_node->v = (void*)0xf0f0f0f0;
+        new_node->v = 0xf0f0f0f0;
         new_node->nodeDesc = nodeDesc;
     }
     level = new_node->level;

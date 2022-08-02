@@ -5,9 +5,8 @@
 #include <cstdint>
 #include "common/assert.h"
 #include "common/allocator.h"
+#include "common/macros.h"
 
-typedef unsigned long setkey_t;
-typedef void         *setval_t;
 
 
 #ifdef __SET_IMPLEMENTATION__
@@ -68,7 +67,8 @@ do {                                                            \
 struct Operator
 {
     uint8_t type;
-    uint32_t key;
+    setkey_t key;
+    setval_t val;
 };
 
 struct Desc

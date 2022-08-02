@@ -43,7 +43,7 @@ BoostingSkip::ReturnCode BoostingSkip::Insert(uint32_t key)
         return LOCK_FAIL;
     }
 
-    setval_t v = set_update(m_list, key, (void*)0xf0f0f0f0, false);
+    setval_t v = set_update(m_list, key, 0xf0f0f0f0, false);
     ret = v == NULL;
     if(!ret)
     {
@@ -108,7 +108,7 @@ void BoostingSkip::OnAbort(ReturnCode ret)
         }
         else if(op.type == INSERT)
         {
-            setval_t v = set_update(m_list, op.key, (void*)0xf0f0f0, false);
+            setval_t v = set_update(m_list, op.key, 0xf0f0f0, false);
             ret = v == NULL;
         }
         else

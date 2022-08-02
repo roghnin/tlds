@@ -364,7 +364,7 @@ trans_skip *transskip_alloc(Allocator<Desc>* _descAllocator, Allocator<NodeDesc>
 }
 
 
-bool transskip_insert(trans_skip *l, setkey_t k, Desc* desc, uint8_t opid, node_t*& n)
+bool transskip_insert(trans_skip *l, setkey_t k, setval_t v, Desc* desc, uint8_t opid, node_t*& n)
 {
     n = NULL;
     bool ret = false;
@@ -430,6 +430,7 @@ bool transskip_insert(trans_skip *l, setkey_t k, Desc* desc, uint8_t opid, node_
                 {
                     if ( new_node != NULL ) free_node(ptst, new_node);
                     n = succ;
+                    n->v = v;
                     ret = true;
                     goto out;
                 }
@@ -459,7 +460,7 @@ bool transskip_insert(trans_skip *l, setkey_t k, Desc* desc, uint8_t opid, node_
     {
         new_node    = alloc_node(ptst);
         new_node->k = k;
-        new_node->v = (void*)0xf0f0f0f0;
+        new_node->v = v;
         new_node->nodeDesc = nodeDesc;
     }
     level = new_node->level;
@@ -689,7 +690,7 @@ setval_t transskip_delete_org(trans_skip *l, setkey_t k)
     return(v);
 }
 
-bool transskip_find(trans_skip* l, setkey_t k, Desc* desc, uint8_t opid)
+bool transskip_find(trans_skip* l, setkey_t k, setval_t& v, Desc* desc, uint8_t opid)
 {
     NodeDesc* nodeDesc = NULL;
 
@@ -754,6 +755,7 @@ retry:
 
                 if(currDesc == oldCurrDesc)
                 {
+                    v = x->v;
                     ret = true;
                     goto out;
                 }
@@ -835,12 +837,12 @@ static inline bool help_ops(trans_skip* l, Desc* desc, uint8_t opid)
 
     while(desc->status == LIVE && ret && opid < desc->size)
     {
-        const Operator& op = desc->ops[opid];
+        Operator& op = desc->ops[opid];
 
         if(op.type == INSERT)
         {
             node_t* n;
-            ret = transskip_insert(l, op.key, desc, opid, n);
+            ret = transskip_insert(l, op.key, op.val, desc, opid, n);
             //insertedNodes.push_back(n);
         }
         else if(op.type == DELETE)
@@ -851,7 +853,7 @@ static inline bool help_ops(trans_skip* l, Desc* desc, uint8_t opid)
         }
         else
         {
-            ret = transskip_find(l, op.key, desc, opid);
+            ret = transskip_find(l, op.key, op.val, desc, opid);
         }
 
         opid++;

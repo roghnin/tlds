@@ -3,8 +3,7 @@
 
 #include <stdint.h>
 
-typedef unsigned long setkey_t;
-typedef void         *setval_t;
+#include "common/macros.h"
 
 typedef struct set_op_st
 {

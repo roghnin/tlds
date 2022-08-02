@@ -257,7 +257,7 @@ bool __attribute__ ((optimize (0))) stmskip_execute_ops(void* s, set_op ops[], i
         }
         else if(ops[i].type == INSERT)
         {
-            ret = stmskip_update(ptst, tx, l, k, (void*)0xf0f0f0f0) == NULL;
+            ret = stmskip_update(ptst, tx, l, k, 0xf0f0f0f0) == NULL;
         }
         else
         {

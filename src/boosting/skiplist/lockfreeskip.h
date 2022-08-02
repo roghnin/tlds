@@ -1,9 +1,7 @@
 #ifndef __LOCKFREESKIP_H__
 #define __LOCKFREESKIP_H__
 
-
-typedef unsigned long setkey_t;
-typedef void         *setval_t;
+#include "common/macros.h"
 
 
 #ifdef __SET_IMPLEMENTATION__
