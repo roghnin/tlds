@@ -8,11 +8,6 @@ This code is extended by "TxContainers: A Library of Wait-Free Transactional Dat
 The code for TxContainers will be posted here upon acceptance of the paper.
 
 To build the code do the following:
-git clone https://github.com/ucf-cs/tlds
-mv tlds trans-dev
-cd trans-dev
-./bootstrap.sh
-cd ../trans-compile
-../trans-dev/configure
-make -j8    
+git clone https://github.com/roghnin/tlds
+./compile.sh
 ./src/trans  #Runs the tester without any options
